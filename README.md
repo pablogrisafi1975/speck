@@ -31,3 +31,4 @@ and got this thing (kind of) working.
 * ServerSentEvents: While there is no native support in com.sun.net.httpserver.HttpServer I think they are not so hard to implement 
 * Compile time json serialization/deserialization... so still no libraries but full json support!
 * Some way to upload files without any library
+* Use Graal native to save memory or whatever

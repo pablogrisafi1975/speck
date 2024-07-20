@@ -1,5 +1,5 @@
 [![](https://img.shields.io/travis/perwendel/speck.svg)](https://travis-ci.org/perwendel/speck)
-[![](https://img.shields.io/github/license/perwendel/speck.svg)](./LICENSE)
+[![](https://img.shields.io/github/license/perwendel/speck.svg)](../LICENSE)
 [![](https://img.shields.io/maven-central/v/com.speck/speck-core.svg)](http://mvnrepository.com/artifact/com.speck/speck-core)
 
 Speck - a tiny web framework for Java 21
