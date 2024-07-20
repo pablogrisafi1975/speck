@@ -19,4 +19,8 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           architecture: x64
-      - run: chmod 777 mvnw & ./mvnw test
+      - run: |
+          echo Setting permissions
+          chmod +x mvnw
+          echo Running mvnw
+          ./mvnw test
