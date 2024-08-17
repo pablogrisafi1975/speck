@@ -224,8 +224,6 @@
                         <extensions>true</extensions>
                         <configuration>
                             <autoPublish>true</autoPublish>
-                            <tokenAuth>true</tokenAuth>
-                            <deploymentName>sample-deploy</deploymentName>
                             <publishingServerId>central</publishingServerId>
                         </configuration>
                     </plugin>
