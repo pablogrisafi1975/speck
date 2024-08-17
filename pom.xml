@@ -223,6 +223,8 @@
                         <version>0.5.0</version>
                         <extensions>true</extensions>
                         <configuration>
+                            <autoPublish>true</autoPublish>
+                            <deploymentName>sample-deploy</deploymentName>
                             <publishingServerId>central</publishingServerId>
                         </configuration>
                     </plugin>
@@ -245,3 +247,9 @@
         </profile>
     </profiles>
 </project>
+
+<!--
+mvn deploy -Prelease
+crea el central-bundle.zip pero falla al subirlo
+Se puede subir manualmente con cualquier nombre y publicarlo
+-->
