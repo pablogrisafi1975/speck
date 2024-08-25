@@ -1,7 +1,7 @@
 package speck;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import speck.util.SpeckTestUtil;
 
@@ -19,23 +19,23 @@ public class UnmapTest {
         awaitInitialization();
 
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("tobeunmapped", response.body);
+        assertEquals(200, response.status);
+        assertEquals("tobeunmapped", response.body);
 
         unmap("/tobeunmapped");
 
         response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        Assert.assertEquals(404, response.status);
+        assertEquals(404, response.status);
 
         get("/tobeunmapped", (q, a) -> "tobeunmapped");
 
         response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("tobeunmapped", response.body);
+        assertEquals(200, response.status);
+        assertEquals("tobeunmapped", response.body);
 
         unmap("/tobeunmapped", "get");
 
         response = testUtil.doMethod("GET", "/tobeunmapped", null);
-        Assert.assertEquals(404, response.status);
+        assertEquals(404, response.status);
     }
 }

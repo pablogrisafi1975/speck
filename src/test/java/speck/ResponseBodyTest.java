@@ -18,13 +18,14 @@ package speck;
 
 import java.io.IOException;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.util.SpeckTestUtil;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static speck.Speck.after;
 import static speck.Speck.get;
 
@@ -45,12 +46,12 @@ public class ResponseBodyTest {
 
     private static SpeckTestUtil http;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         http = new SpeckTestUtil(4567);
 

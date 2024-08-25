@@ -1,9 +1,9 @@
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import speck.util.SpeckTestUtil;
 
 import static speck.Service.ignite;
@@ -16,7 +16,7 @@ public class ServicePortIntegrationTest {
     private static Service service;
     private static final System.Logger logger = System.getLogger(ServicePortIntegrationTest.class.getName());;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         service = ignite();
         service.port(0);
@@ -35,11 +35,11 @@ public class ServicePortIntegrationTest {
         SpeckTestUtil testUtil = new SpeckTestUtil(actualPort);
 
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hi", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("Hello World!", response.body);
+        assertEquals(200, response.status);
+        assertEquals("Hello World!", response.body);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws Exception {
         service.stop();
     }

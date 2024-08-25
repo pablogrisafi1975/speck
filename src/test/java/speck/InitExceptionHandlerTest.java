@@ -1,9 +1,9 @@
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static speck.Service.ignite;
 
@@ -13,7 +13,7 @@ public class InitExceptionHandlerTest {
     private static Service service;
     private static String errorMessage = "";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         service = ignite();
         service.port(NON_VALID_PORT);
@@ -24,10 +24,10 @@ public class InitExceptionHandlerTest {
 
     @Test
     public void testInitExceptionHandler() throws Exception {
-        Assert.assertEquals("Custom init error", errorMessage);
+        assertEquals("Custom init error", errorMessage);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws Exception {
         service.stop();
     }

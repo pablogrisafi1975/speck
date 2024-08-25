@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.Speck;
 import speck.examples.exception.NotFoundException;
@@ -53,7 +53,7 @@ public class StaticFilesTest {
 
     private static File tmpExternalFile;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
         if (tmpExternalFile != null) {
@@ -62,7 +62,7 @@ public class StaticFilesTest {
         }
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -92,28 +92,28 @@ public class StaticFilesTest {
 
     @Test
     public void testMimeTypes() throws Exception {
-        Assert.assertEquals("text/html", doGet("/pages/index.html").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("application/javascript", doGet("/js/scripts.js").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("text/css", doGet("/css/style.css").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("image/png", doGet("/img/specklogo.png").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("image/svg+xml", doGet("/img/specklogo.svg").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("application/octet-stream", doGet("/img/specklogoPng").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("application/octet-stream", doGet("/img/specklogoSvg").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("text/html", doGet("/externalFile.html").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("text/html", doGet("/pages/index.html").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("application/javascript", doGet("/js/scripts.js").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("text/css", doGet("/css/style.css").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("image/png", doGet("/img/specklogo.png").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("image/svg+xml", doGet("/img/specklogo.svg").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("application/octet-stream", doGet("/img/specklogoPng").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("application/octet-stream", doGet("/img/specklogoSvg").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("text/html", doGet("/externalFile.html").headers.firstValue("Content-Type").orElse(null));
     }
 
     @Test
     public void testCustomMimeType() throws Exception {
         staticFiles.registerMimeType("cxt", "custom-extension-type");
-        Assert.assertEquals("custom-extension-type", doGet("/img/file.cxt").headers.firstValue("Content-Type").orElse(null));
+        assertEquals("custom-extension-type", doGet("/img/file.cxt").headers.firstValue("Content-Type").orElse(null));
     }
 
     @Test
     public void testStaticFileCssStyleCss() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/css/style.css");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("text/css", response.headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals("Content of css file", response.body);
+        assertEquals(200, response.status);
+        assertEquals("text/css", response.headers.firstValue("Content-Type").orElse(null));
+        assertEquals("Content of css file", response.body);
 
         testGet();
     }
@@ -121,8 +121,8 @@ public class StaticFilesTest {
     @Test
     public void testStaticFilePagesIndexHtml() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/pages/index.html");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("<html><body>Hello Static World!</body></html>", response.body);
+        assertEquals(200, response.status);
+        assertEquals("<html><body>Hello Static World!</body></html>", response.body);
 
         testGet();
     }
@@ -130,8 +130,8 @@ public class StaticFilesTest {
     @Test
     public void testStaticFilePageHtml() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/page.html");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("<html><body>Hello Static Files World!</body></html>", response.body);
+        assertEquals(200, response.status);
+        assertEquals("<html><body>Hello Static Files World!</body></html>", response.body);
 
         testGet();
     }
@@ -141,7 +141,7 @@ public class StaticFilesTest {
         String path = "/" + URLEncoder.encode("..\\speck\\", StandardCharsets.UTF_8) + "Speck.class";
         SpeckTestUtil.UrlResponse response = doGet(path);
 
-        Assert.assertEquals(400, response.status);
+        assertEquals(400, response.status);
 
         testGet();
     }
@@ -149,8 +149,8 @@ public class StaticFilesTest {
     @Test
     public void testExternalStaticFile() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/externalFile.html");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
+        assertEquals(200, response.status);
+        assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
 
         testGet();
     }
@@ -161,16 +161,16 @@ public class StaticFilesTest {
     private static void testGet() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        Assert.assertEquals(200, response.status);
-        Assert.assertTrue(response.body.contains(FO_SHIZZY));
+        assertEquals(200, response.status);
+        assertTrue(response.body.contains(FO_SHIZZY));
     }
 
     @Test
     public void testExceptionMapping404() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/filethatdoesntexist.html");
 
-        Assert.assertEquals(404, response.status);
-        Assert.assertEquals(NOT_FOUND_BRO, response.body);
+        assertEquals(404, response.status);
+        assertEquals(NOT_FOUND_BRO, response.body);
     }
 
     private SpeckTestUtil.UrlResponse doGet(String fileName) throws Exception {

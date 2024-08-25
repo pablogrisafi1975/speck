@@ -18,9 +18,9 @@ package speck;
 
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.util.SpeckTestUtil;
 
@@ -36,7 +36,7 @@ public class RedirectTest {
 
     private static SpeckTestUtil testUtil;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
         testUtil.setFollowRedirectStrategy(301, 302); // don't set the others to be able to verify affect of Redirect.Status
@@ -61,105 +61,105 @@ public class RedirectTest {
     @Test
     public void testRedirectGet() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hi", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectPost() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("POST", "/hi", "");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectPut() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/hi", "");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectDelete() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/hi", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectAnyGet() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/any", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectAnyPut() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/any", "");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectAnyPost() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("POST", "/any", "");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectAnyDelete() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/any", "");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(REDIRECTED, response.body);
+        assertEquals(200, response.status);
+        assertEquals(REDIRECTED, response.body);
     }
 
     @Test
     public void testRedirectGetWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hiagain", null);
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectPostWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("POST", "/hiagain", "");
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectPutWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/hiagain", "");
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectDeleteWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/hiagain", null);
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectAnyGetWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/anyagain", null);
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectAnyPostWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("POST", "/anyagain", "");
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectAnyPutWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("PUT", "/anyagain", "");
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
     @Test
     public void testRedirectAnyDeleteWithSpecificCode() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("DELETE", "/anyagain", null);
-        Assert.assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
+        assertEquals(Redirect.Status.USE_PROXY.intValue(), response.status);
     }
 
 }

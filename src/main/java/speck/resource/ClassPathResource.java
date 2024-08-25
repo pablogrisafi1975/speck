@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Objects;
 
 import speck.utils.Assert;
 import speck.utils.ClassUtils;
@@ -74,7 +75,7 @@ public class ClassPathResource extends AbstractFileResolvingResource {
      * @see ClassLoader#getResourceAsStream(String)
      */
     public ClassPathResource(String path, ClassLoader classLoader) {
-        Assert.notNull(path, "Path must not be null");
+        Objects.requireNonNull(path, "Path must not be null");
         Assert.isTrue(isValid(path), "Path is not valid");
 
         String pathToUse = StringUtils.cleanPath(path);

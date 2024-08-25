@@ -1,11 +1,11 @@
 package speck.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SpeckUtilsTest {
 
@@ -16,25 +16,22 @@ public class SpeckUtilsTest {
 
         List<String> actual = SpeckUtils.convertRouteToList("/api/person/:id");
 
-        assertEquals("Should return route as a list of individual elements that path is made of",
-            expected,
-            actual);
+        assertEquals(expected,actual, "Should return route as a list of individual elements that path is made of");
 
     }
 
     @Test
     public void testIsParam_whenParameterFormattedAsParam() {
 
-        assertTrue("Should return true because parameter follows convention of a parameter (:paramname)",
-                SpeckUtils.isParam(":param"));
+        assertTrue(SpeckUtils.isParam(":param"), "Should return true because parameter follows convention of a parameter (:paramname)");
 
     }
 
     @Test
     public void testIsParam_whenParameterNotFormattedAsParam() {
 
-        assertFalse("Should return false because parameter does not follows convention of a parameter (:paramname)",
-                SpeckUtils.isParam(".param"));
+        assertFalse(SpeckUtils.isParam(".param"), "Should return false because parameter does not follows convention of a parameter (:paramname)"
+                );
 
     }
 
@@ -42,14 +39,14 @@ public class SpeckUtilsTest {
     @Test
     public void testIsSplat_whenParameterIsASplat() throws Exception {
 
-        assertTrue("Should return true because parameter is a splat (*)", SpeckUtils.isSplat("*"));
+        assertTrue(SpeckUtils.isSplat("*"), "Should return true because parameter is a splat (*)");
 
     }
 
     @Test
     public void testIsSplat_whenParameterIsNotASplat() throws Exception {
 
-        assertFalse("Should return true because parameter is not a splat (*)", SpeckUtils.isSplat("!"));
+        assertFalse(SpeckUtils.isSplat("!"), "Should return true because parameter is not a splat (*)");
 
     }
 }

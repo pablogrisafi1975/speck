@@ -18,6 +18,7 @@
 package speck.resource;
 
 import java.net.MalformedURLException;
+import java.util.Objects;
 
 
 import speck.staticfiles.DirectoryTraversal;
@@ -49,7 +50,7 @@ public class ClassPathResourceHandler extends AbstractResourceHandler {
      * @param welcomeFile  the welcomeFile
      */
     public ClassPathResourceHandler(String baseResource, String welcomeFile) {
-        Assert.notNull(baseResource);
+        Objects.requireNonNull(baseResource);
 
         this.baseResource = baseResource;
         this.welcomeFile = welcomeFile;

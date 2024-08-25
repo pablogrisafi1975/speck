@@ -1,9 +1,9 @@
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import speck.util.SpeckTestUtil;
 import speck.util.SpeckTestUtil.UrlResponse;
 
@@ -23,12 +23,12 @@ public class GenericSecureIntegrationTest {
     private static final System.Logger logger = System.getLogger(GenericSecureIntegrationTest.class.getName());
     static SpeckTestUtil testUtil;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         testUtil = new SpeckTestUtil(4567);
 
@@ -70,8 +70,8 @@ public class GenericSecureIntegrationTest {
     @Test
     public void testGetHi() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethodSecure("GET", "/hi", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("Hello World!", response.body);
+        assertEquals(200, response.status);
+        assertEquals("Hello World!", response.body);
     }
 
     @Test
@@ -81,79 +81,79 @@ public class GenericSecureIntegrationTest {
         headers.put("X-Forwarded-For", xForwardedFor);
 
         UrlResponse response = testUtil.doMethod("GET", "/ip", null, true, "text/html", headers);
-        Assert.assertEquals(xForwardedFor, response.body);
+        assertEquals(xForwardedFor, response.body);
 
         response = testUtil.doMethod("GET", "/ip", null, true, "text/html", null);
-        Assert.assertNotEquals(xForwardedFor, response.body);
+        assertNotEquals(xForwardedFor, response.body);
     }
 
 
     @Test
     public void testHiHead() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("HEAD", "/hi", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("", response.body);
+        assertEquals(200, response.status);
+        assertEquals("", response.body);
     }
 
     @Test
     public void testGetHiAfterFilter() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/hi", null);
-        Assert.assertTrue(response.headers.allValues("after").contains("foobar"));
+        assertTrue(response.headers.allValues("after").contains("foobar"));
     }
 
     @Test
     public void testGetRoot() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("Hello Root!", response.body);
+        assertEquals(200, response.status);
+        assertEquals("Hello Root!", response.body);
     }
 
     @Test
     public void testEchoParam1() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/shizzy", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("echo: shizzy", response.body);
+        assertEquals(200, response.status);
+        assertEquals("echo: shizzy", response.body);
     }
 
     @Test
     public void testEchoParam2() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/gunit", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("echo: gunit", response.body);
+        assertEquals(200, response.status);
+        assertEquals("echo: gunit", response.body);
     }
 
     @Test
     public void testEchoParamWithMaj() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("GET", "/paramwithmaj/plop", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("echo: plop", response.body);
+        assertEquals(200, response.status);
+        assertEquals("echo: plop", response.body);
     }
 
     @Test
     public void testUnauthorized() throws Exception {
         UrlResponse urlResponse = testUtil.doMethodSecure("GET", "/protected/resource", null);
-        Assert.assertEquals(401, urlResponse.status);
+        assertEquals(401, urlResponse.status);
     }
 
     @Test
     public void testNotFound() throws Exception {
         UrlResponse urlResponse = testUtil.doMethodSecure("GET", "/no/resource", null);
-        Assert.assertEquals(404, urlResponse.status);
+        assertEquals(404, urlResponse.status);
     }
 
     @Test
     public void testPost() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("POST", "/poster", "Fo shizzy");
         logger.log(System.Logger.Level.INFO, response.body);
-        Assert.assertEquals(201, response.status);
-        Assert.assertTrue(response.body.contains("Fo shizzy"));
+        assertEquals(201, response.status);
+        assertTrue(response.body.contains("Fo shizzy"));
     }
 
     @Test
     public void testPatch() throws Exception {
         UrlResponse response = testUtil.doMethodSecure("PATCH", "/patcher", "Fo shizzy");
         logger.log(System.Logger.Level.INFO, response.body);
-        Assert.assertEquals(200, response.status);
-        Assert.assertTrue(response.body.contains("Fo shizzy"));
+        assertEquals(200, response.status);
+        assertTrue(response.body.contains("Fo shizzy"));
     }
 }

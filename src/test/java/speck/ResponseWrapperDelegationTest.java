@@ -1,9 +1,9 @@
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import speck.util.SpeckTestUtil;
 import speck.util.SpeckTestUtil.UrlResponse;
 
@@ -15,12 +15,12 @@ public class ResponseWrapperDelegationTest {
 
     static SpeckTestUtil testUtil;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -55,15 +55,15 @@ public class ResponseWrapperDelegationTest {
     @Test
     public void filters_can_detect_response_status() throws Exception {
         UrlResponse response = testUtil.get("/204");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("ok", response.body);
+        assertEquals(200, response.status);
+        assertEquals("ok", response.body);
     }
 
     @Test
     public void filters_can_detect_content_type() throws Exception {
         UrlResponse response = testUtil.get("/json");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("{\"status\": \"ok\"}", response.body);
-        Assert.assertEquals("text/plain", response.headers.firstValue("Content-Type").orElse(null));
+        assertEquals(200, response.status);
+        assertEquals("{\"status\": \"ok\"}", response.body);
+        assertEquals("text/plain", response.headers.firstValue("Content-Type").orElse(null));
     }
 }

@@ -1,14 +1,14 @@
 package speck;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+
+
 import static org.mockito.Mockito.*;
 
 public class ResponseTest {

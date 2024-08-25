@@ -2,10 +2,10 @@ package speck.customerrorpages;
 
 import java.io.IOException;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.CustomErrorPages;
 import speck.Speck;
@@ -25,12 +25,12 @@ public class CustomErrorPagesTest {
 
     static SpeckTestUtil testUtil;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -56,30 +56,30 @@ public class CustomErrorPagesTest {
     @Test
     public void testGetHi() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals(HELLO_WORLD, response.body);
+        assertEquals(200, response.status);
+        assertEquals(HELLO_WORLD, response.body);
     }
 
     @Test
     public void testCustomNotFound() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/othernotmapped", null);
-        Assert.assertEquals(404, response.status);
-        Assert.assertEquals(CUSTOM_NOT_FOUND, response.body);
+        assertEquals(404, response.status);
+        assertEquals(CUSTOM_NOT_FOUND, response.body);
     }
 
     @Test
     public void testCustomInternal() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/raiseinternal", null);
-        Assert.assertEquals(500, response.status);
-        Assert.assertEquals(APPLICATION_JSON, response.headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals(CUSTOM_INTERNAL, response.body);
+        assertEquals(500, response.status);
+        assertEquals(APPLICATION_JSON, response.headers.firstValue("Content-Type").orElse(null));
+        assertEquals(CUSTOM_INTERNAL, response.body);
     }
 
     @Test
     public void testCustomInternalFailingRoute() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/raiseinternal?" + QUERY_PARAM_KEY + "=sumthin", null);
-        Assert.assertEquals(500, response.status);
-        Assert.assertEquals(CustomErrorPages.INTERNAL_ERROR, response.body);
+        assertEquals(500, response.status);
+        assertEquals(CustomErrorPages.INTERNAL_ERROR, response.body);
     }
 
 }

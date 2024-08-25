@@ -1,16 +1,18 @@
 package speck;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static speck.Speck.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * System tests for the Cookies support.
@@ -22,7 +24,7 @@ public class CookiesIntegrationTest {
     private static final String DEFAULT_HOST_URL = "http://localhost:4567";
     private HttpClient httpClient = HttpClientBuilder.create().build();
 
-    @BeforeClass
+    @BeforeAll
     public static void initRoutes() throws InterruptedException {
         post("/assertNoCookies", (request, response) -> {
             if (!request.cookies().isEmpty()) {
@@ -80,7 +82,7 @@ public class CookiesIntegrationTest {
 
     }
 
-    @AfterClass
+    @AfterAll
     public static void stopServer() {
         Speck.stop();
     }

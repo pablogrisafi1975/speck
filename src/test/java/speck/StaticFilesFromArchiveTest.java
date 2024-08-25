@@ -18,16 +18,17 @@ package speck;
 
 import static java.lang.ClassLoader.getSystemClassLoader;
 import static java.lang.System.arraycopy;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import speck.util.SpeckTestUtil;
 import speck.util.SpeckTestUtil.UrlResponse;
@@ -38,13 +39,14 @@ import speck.util.SpeckTestUtil.UrlResponse;
  So I choose to ignore this test until we find a way
 
  */
+@Disabled
 public class StaticFilesFromArchiveTest {
 
     private static SpeckTestUtil testUtil;
     private static ClassLoader classLoader;
     private static ClassLoader initialClassLoader;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws Exception {
         setupClassLoader();
         testUtil = new SpeckTestUtil(4567);
@@ -61,7 +63,7 @@ public class StaticFilesFromArchiveTest {
         awaitInitializationMethod.invoke(null);
     }
 
-    @AfterClass
+    @AfterAll
     public static void resetClassLoader() {
         Thread.currentThread().setContextClassLoader(initialClassLoader);
     }
@@ -86,7 +88,8 @@ public class StaticFilesFromArchiveTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
+
     public void testCss() throws Exception {
         UrlResponse response = testUtil.doMethod("GET", "/css/style.css", null);
 

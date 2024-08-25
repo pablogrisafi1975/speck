@@ -16,16 +16,16 @@
  */
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.examples.gzip.GzipClient;
 import speck.examples.gzip.GzipExample;
 import speck.util.SpeckTestUtil;
 
-import static org.junit.Assert.assertEquals;
+
 import static speck.Speck.awaitInitialization;
 import static speck.Speck.stop;
 
@@ -34,14 +34,14 @@ import static speck.Speck.stop;
  */
 public class GzipTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         GzipExample.addStaticFileLocation();
         GzipExample.addRoutes();
         awaitInitialization();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         stop();
     }
@@ -55,7 +55,7 @@ public class GzipTest {
     @Test
     public void testStaticFileCssStyleCss() throws Exception {
         String decompressed = GzipClient.getAndDecompress("http://localhost:4567/css/style.css");
-        Assert.assertEquals("Content of css file", decompressed);
+        assertEquals("Content of css file", decompressed);
         testGet();
     }
 
@@ -66,8 +66,8 @@ public class GzipTest {
         SpeckTestUtil testUtil = new SpeckTestUtil(4567);
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        Assert.assertEquals(200, response.status);
-        Assert.assertTrue(response.body.contains(GzipExample.FO_SHIZZY));
+        assertEquals(200, response.status);
+        assertTrue(response.body.contains(GzipExample.FO_SHIZZY));
     }
 
 }

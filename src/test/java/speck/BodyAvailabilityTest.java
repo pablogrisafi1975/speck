@@ -1,9 +1,9 @@
 package speck;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.util.SpeckTestUtil;
 
@@ -25,7 +25,7 @@ public class BodyAvailabilityTest {
     private static String routeBody = null;
     private static String afterBody = null;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
 
@@ -34,7 +34,7 @@ public class BodyAvailabilityTest {
         afterBody = null;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         LOGGER.log(System.Logger.Level.DEBUG, "setup()");
 
@@ -67,11 +67,11 @@ public class BodyAvailabilityTest {
     public void testPost() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("POST", "/hello", BODY_CONTENT);
         LOGGER.log(System.Logger.Level.INFO, response.body);
-        Assert.assertEquals(HTTP_OK, response.status);
-        Assert.assertTrue(response.body.contains(BODY_CONTENT));
+        assertEquals(HTTP_OK, response.status);
+        assertTrue(response.body.contains(BODY_CONTENT));
 
-        Assert.assertEquals(BODY_CONTENT, beforeBody);
-        Assert.assertEquals(BODY_CONTENT, routeBody);
-        Assert.assertEquals(BODY_CONTENT, afterBody);
+        assertEquals(BODY_CONTENT, beforeBody);
+        assertEquals(BODY_CONTENT, routeBody);
+        assertEquals(BODY_CONTENT, afterBody);
     }
 }

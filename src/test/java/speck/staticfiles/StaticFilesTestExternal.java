@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.Speck;
 import speck.examples.exception.NotFoundException;
@@ -55,7 +55,7 @@ public class StaticFilesTestExternal {
     private static File tmpExternalFile2;
     private static File folderOutsideStaticFiles;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
         if (tmpExternalFile1 != null) {
@@ -66,7 +66,7 @@ public class StaticFilesTestExternal {
         }
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -108,9 +108,9 @@ public class StaticFilesTestExternal {
     @Test
     public void testExternalStaticFile() throws Exception {
         SpeckTestUtil.UrlResponse response = doGet("/externalFile.html");
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("text/html", response.headers.firstValue("Content-Type").orElse(null));
-        Assert.assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
+        assertEquals(200, response.status);
+        assertEquals("text/html", response.headers.firstValue("Content-Type").orElse(null));
+        assertEquals(CONTENT_OF_EXTERNAL_FILE, response.body);
 
         testGet();
     }
@@ -120,8 +120,8 @@ public class StaticFilesTestExternal {
         String path = "/" + URLEncoder.encode("..\\..\\speck\\", StandardCharsets.UTF_8) + "Speck.class";
         SpeckTestUtil.UrlResponse response = doGet(path);
 
-        Assert.assertEquals(404, response.status);
-        Assert.assertEquals(NOT_FOUND_BRO, response.body);
+        assertEquals(404, response.status);
+        assertEquals(NOT_FOUND_BRO, response.body);
 
         testGet();
     }
@@ -129,8 +129,8 @@ public class StaticFilesTestExternal {
     private static void testGet() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        Assert.assertEquals(200, response.status);
-        Assert.assertTrue(response.body.contains(FO_SHIZZY));
+        assertEquals(200, response.status);
+        assertTrue(response.body.contains(FO_SHIZZY));
     }
 
     private SpeckTestUtil.UrlResponse doGet(String fileName) throws Exception {

@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.examples.exception.NotFoundException;
 import speck.util.SpeckTestUtil;
@@ -52,7 +52,7 @@ public class StaticFilesMemberTest {
 
     private static File tmpExternalFile;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
         if (tmpExternalFile != null) {
@@ -61,7 +61,7 @@ public class StaticFilesMemberTest {
         }
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -92,8 +92,8 @@ public class StaticFilesMemberTest {
     @Test
     public void testStaticFileCssStyleCss() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/css/style.css", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("Content of css file", response.body);
+        assertEquals(200, response.status);
+        assertEquals("Content of css file", response.body);
 
         testGet();
     }
@@ -103,17 +103,17 @@ public class StaticFilesMemberTest {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/js/module.mjs", null);
 
         String expectedContentType = response.headers.firstValue("Content-Type").orElse(null);
-        Assert.assertEquals(expectedContentType, "application/javascript");
+        assertEquals(expectedContentType, "application/javascript");
 
         String body = response.body;
-        Assert.assertEquals("export default function () { console.log(\"Hello, I'm a .mjs file\"); }\n", body);
+        assertEquals("export default function () { console.log(\"Hello, I'm a .mjs file\"); }\n", body);
     }
 
     @Test
     public void testStaticFilePagesIndexHtml() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/pages/index.html", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("<html><body>Hello Static World!</body></html>", response.body);
+        assertEquals(200, response.status);
+        assertEquals("<html><body>Hello Static World!</body></html>", response.body);
 
         testGet();
     }
@@ -121,8 +121,8 @@ public class StaticFilesMemberTest {
     @Test
     public void testStaticFilePageHtml() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/page.html", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("<html><body>Hello Static Files World!</body></html>", response.body);
+        assertEquals(200, response.status);
+        assertEquals("<html><body>Hello Static Files World!</body></html>", response.body);
 
         testGet();
     }
@@ -130,8 +130,8 @@ public class StaticFilesMemberTest {
     @Test
     public void testExternalStaticFile() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/externalFile.html", null);
-        Assert.assertEquals(200, response.status);
-        Assert.assertEquals("Content of external file", response.body);
+        assertEquals(200, response.status);
+        assertEquals("Content of external file", response.body);
 
         testGet();
     }
@@ -140,8 +140,8 @@ public class StaticFilesMemberTest {
     public void testStaticFileHeaders() throws Exception {
         staticFiles.headers(Map.of("Server", "Microsoft Word", "Cache-Control", "private, max-age=600"));
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/pages/index.html", null);
-        Assert.assertEquals("Microsoft Word", response.headers.firstValue("Server").orElse(null));
-        Assert.assertEquals("private, max-age=600", response.headers.firstValue("Cache-Control").orElse(null));
+        assertEquals("Microsoft Word", response.headers.firstValue("Server").orElse(null));
+        assertEquals("private, max-age=600", response.headers.firstValue("Cache-Control").orElse(null));
 
         testGet();
     }
@@ -150,7 +150,7 @@ public class StaticFilesMemberTest {
     public void testStaticFileExpireTime() throws Exception {
         staticFiles.expireTime(600);
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/pages/index.html", null);
-        Assert.assertEquals("private, max-age=600", response.headers.firstValue("Cache-Control").orElse(null));
+        assertEquals("private, max-age=600", response.headers.firstValue("Cache-Control").orElse(null));
 
         testGet();
     }
@@ -161,15 +161,15 @@ public class StaticFilesMemberTest {
     private static void testGet() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/hello", "");
 
-        Assert.assertEquals(200, response.status);
-        Assert.assertTrue(response.body.contains(FO_SHIZZY));
+        assertEquals(200, response.status);
+        assertTrue(response.body.contains(FO_SHIZZY));
     }
 
     @Test
     public void testExceptionMapping404() throws Exception {
         SpeckTestUtil.UrlResponse response = testUtil.doMethod("GET", "/filethatdoesntexist.html", null);
 
-        Assert.assertEquals(404, response.status);
-        Assert.assertEquals(NOT_FOUND_BRO, response.body);
+        assertEquals(404, response.status);
+        assertEquals(NOT_FOUND_BRO, response.body);
     }
 }

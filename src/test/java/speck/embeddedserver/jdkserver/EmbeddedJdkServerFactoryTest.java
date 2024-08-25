@@ -1,15 +1,15 @@
 package speck.embeddedserver.jdkserver;
 
-import org.junit.After;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import speck.ExceptionMapper;
 import speck.embeddedserver.EmbeddedServer;
 import speck.route.Routes;
 import speck.staticfiles.StaticFilesConfiguration;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -97,7 +97,7 @@ public class EmbeddedJdkServerFactoryTest {
         assertFalse(((JettyHandler) server.getHandler()).getSessionCookieConfig().isHttpOnly());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (embeddedServer != null) {
             embeddedServer.extinguish();

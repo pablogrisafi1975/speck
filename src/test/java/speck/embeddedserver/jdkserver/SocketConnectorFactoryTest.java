@@ -1,15 +1,15 @@
 package speck.embeddedserver.jdkserver;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import speck.ReflectionUtils;
 import speck.ssl.SslStores;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+
+
 
 public class SocketConnectorFactoryTest {
 /*

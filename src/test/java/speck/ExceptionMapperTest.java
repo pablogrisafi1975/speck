@@ -1,8 +1,9 @@
 package speck;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ExceptionMapperTest {
 
@@ -16,7 +17,7 @@ public class ExceptionMapperTest {
 
         //then
         exceptionMapper = ExceptionMapper.getServletInstance();
-        assertEquals("Should be equals because ExceptionMapper is a singleton", ReflectionUtils.readStatic(ExceptionMapper.class, "servletInstance"), exceptionMapper);
+        assertEquals(ReflectionUtils.readStatic(ExceptionMapper.class, "servletInstance"), exceptionMapper, "Should be equals because ExceptionMapper is a singleton");
 
 
     }
@@ -28,7 +29,7 @@ public class ExceptionMapperTest {
 
         //then
         ExceptionMapper exceptionMapper = ExceptionMapper.getServletInstance();
-        assertEquals("Should be equals because ExceptionMapper is a singleton", ReflectionUtils.readStatic(ExceptionMapper.class, "servletInstance"), exceptionMapper);
+        assertEquals(ReflectionUtils.readStatic(ExceptionMapper.class, "servletInstance"), exceptionMapper, "Should be equals because ExceptionMapper is a singleton");
 
 
     }

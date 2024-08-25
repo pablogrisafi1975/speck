@@ -1,20 +1,15 @@
 package speck;
 
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import speck.embeddedserver.EmbeddedServer;
 import speck.embeddedserver.EmbeddedServers;
 import speck.route.Routes;
 import speck.ssl.SslStores;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static speck.Service.ignite;
 
 public class ServiceTest {
@@ -24,58 +19,69 @@ public class ServiceTest {
 
     private Service service;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Before
+    @BeforeEach
     public void test() {
         service = ignite();
     }
 
     @Test
     public void testEmbeddedServerIdentifier_defaultAndSet() {
-        assertEquals("Should return defaultIdentifier()",
+        assertEquals(
             EmbeddedServers.defaultIdentifier(),
-            service.embeddedServerIdentifier());
+            service.embeddedServerIdentifier(),
+            "Should return defaultIdentifier()");
 
         Object obj = new Object();
 
         service.embeddedServerIdentifier(obj);
 
-        assertEquals("Should return expected obj",
+        assertEquals(
             obj,
-            service.embeddedServerIdentifier());
+            service.embeddedServerIdentifier(),
+            "Should return expected obj");
     }
 
     @Test
     public void testEmbeddedServerIdentifier_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
+        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            Object obj = new Object();
 
-        Object obj = new Object();
+            ReflectionUtils.write(service, "initialized", true);
+            service.embeddedServerIdentifier(obj);
+        });
+        assertEquals(thrown.getMessage(), "This must be done before route mapping has begun");
 
-        ReflectionUtils.write(service, "initialized", true);
-        service.embeddedServerIdentifier(obj);
+
     }
 
-    @Test(expected = HaltException.class)
+    @Test
     public void testHalt_whenOutParameters_thenThrowHaltException() {
-        service.halt();
+        assertThrows(HaltException.class, () -> {
+            service.halt();
+        });
+
     }
 
-    @Test(expected = HaltException.class)
+    @Test
     public void testHalt_whenStatusCode_thenThrowHaltException() {
-        service.halt(NOT_FOUND_STATUS_CODE);
+        assertThrows(HaltException.class, () -> {
+            service.halt(NOT_FOUND_STATUS_CODE);
+        });
     }
 
-    @Test(expected = HaltException.class)
+    @Test
     public void testHalt_whenBodyContent_thenThrowHaltException() {
-        service.halt("error");
+        assertThrows(HaltException.class, () -> {
+            service.halt("error");
+        });
+
     }
 
-    @Test(expected = HaltException.class)
+    @Test
     public void testHalt_whenStatusCodeAndBodyContent_thenThrowHaltException() {
-        service.halt(NOT_FOUND_STATUS_CODE, "error");
+        assertThrows(HaltException.class, () -> {
+            service.halt(NOT_FOUND_STATUS_CODE, "error");
+        });
     }
 
     @Test
@@ -83,16 +89,16 @@ public class ServiceTest {
         service.ipAddress(IP_ADDRESS);
 
         String ipAddress = (String) ReflectionUtils.read(service, "ipAddress");
-        assertEquals("IP address should be set to the IP address that was specified", IP_ADDRESS, ipAddress);
+        assertEquals( IP_ADDRESS, ipAddress, "IP address should be set to the IP address that was specified");
     }
 
     @Test
     public void testIpAddress_whenInitializedTrue_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
-
-        ReflectionUtils.write(service, "initialized", true);
-        service.ipAddress(IP_ADDRESS);
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", true);
+            service.ipAddress(IP_ADDRESS);
+        });
+        assertEquals("This must be done before route mapping has begun", thrown.getMessage());
     }
 
     @Test
@@ -100,16 +106,16 @@ public class ServiceTest {
         service.ipAddress(IP_ADDRESS);
 
         String ipAddress = (String) ReflectionUtils.read(service, "ipAddress");
-        assertEquals("IP address should be set to the IP address that was specified", IP_ADDRESS, ipAddress);
+        assertEquals( IP_ADDRESS, ipAddress, "IP address should be set to the IP address that was specified");
     }
 
     @Test
     public void testSetIpAddress_whenInitializedTrue_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
-
-        ReflectionUtils.write(service, "initialized", true);
-        service.ipAddress(IP_ADDRESS);
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", true);
+            service.ipAddress(IP_ADDRESS);
+        });
+        assertEquals("This must be done before route mapping has begun", thrown.getMessage());
     }
 
     @Test
@@ -117,16 +123,16 @@ public class ServiceTest {
         service.port(8080);
 
         int port = (int) ReflectionUtils.read(service, "port");
-        assertEquals("Port should be set to the Port that was specified", 8080, port);
+        assertEquals(8080, port, "Port should be set to the Port that was specified");
     }
 
     @Test
     public void testPort_whenInitializedTrue_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
-
-        ReflectionUtils.write(service, "initialized", true);
-        service.port(8080);
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", true);
+            service.port(8080);
+        });
+        assertEquals("This must be done before route mapping has begun", thrown.getMessage());
     }
 
     @Test
@@ -134,25 +140,25 @@ public class ServiceTest {
         service.port(8080);
 
         int port = (int) ReflectionUtils.read(service, "port");
-        assertEquals("Port should be set to the Port that was specified", 8080, port);
+        assertEquals(8080, port, "Port should be set to the Port that was specified");
     }
 
     @Test
     public void testSetPort_whenInitializedTrue_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
-
-        ReflectionUtils.write(service, "initialized", true);
-        service.port(8080);
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", true);
+            service.port(8080);
+        });
+        assertEquals("This must be done before route mapping has begun", thrown.getMessage());
     }
 
     @Test
     public void testGetPort_whenInitializedFalse_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done after route mapping has begun");
-
-        ReflectionUtils.write(service, "initialized", false);
-        service.port();
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", false);
+            service.port();
+        });
+        assertEquals("This must be done after route mapping has begun", thrown.getMessage());
     }
 
     @Test
@@ -163,7 +169,7 @@ public class ServiceTest {
 
         int actualPort = service.port();
 
-        assertEquals("Port retrieved should be the port setted", expectedPort, actualPort);
+        assertEquals(expectedPort, actualPort, "Port retrieved should be the port setted");
     }
 
     @Test
@@ -173,42 +179,43 @@ public class ServiceTest {
 
         int actualPort = service.port();
 
-        assertEquals("Port retrieved should be the port setted", expectedPort, actualPort);
+        assertEquals(expectedPort, actualPort, "Port retrieved should be the port setted");
     }
-
 
 
     @Test
     public void testSecure_thenReturnNewSslStores() {
         service.secure("keyfile", "keypassword", "truststorefile", "truststorepassword");
         SslStores sslStores = (SslStores) ReflectionUtils.read(service, "sslStores");
-        assertNotNull("Should return a SslStores because we configured it to have one", sslStores);
-        assertEquals("Should return keystoreFile from SslStores", "keyfile", sslStores.keystoreFile());
-        assertEquals("Should return keystorePassword from SslStores", "keypassword", sslStores.keystorePassword());
-        assertEquals("Should return trustStoreFile from SslStores", "truststorefile", sslStores.trustStoreFile());
-        assertEquals("Should return trustStorePassword from SslStores", "truststorepassword", sslStores.trustStorePassword());
+        assertNotNull(sslStores, "Should return a SslStores because we configured it to have one");
+        assertEquals("keyfile", sslStores.keystoreFile(), "Should return keystoreFile from SslStores");
+        assertEquals("keypassword", sslStores.keystorePassword(), "Should return keystorePassword from SslStores");
+        assertEquals("truststorefile", sslStores.trustStoreFile(), "Should return trustStoreFile from SslStores");
+        assertEquals("truststorepassword", sslStores.trustStorePassword(), "Should return trustStorePassword from SslStores");
     }
 
     @Test
     public void testSecure_whenInitializedTrue_thenThrowIllegalStateException() {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("This must be done before route mapping has begun");
+        var thrown = assertThrows(IllegalStateException.class, () -> {
+            ReflectionUtils.write(service, "initialized", true);
+            service.secure(null, null, null, null);
 
-        ReflectionUtils.write(service, "initialized", true);
-        service.secure(null, null, null, null);
+        });
+        assertEquals("This must be done before route mapping has begun", thrown.getMessage());
     }
 
     @Test
     public void testSecure_whenInitializedFalse_thenThrowIllegalArgumentException() {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Must provide a keystore file to run secured");
+        var thrown = assertThrows(IllegalArgumentException.class, () -> {
+            service.secure(null, null, null, null);
 
-        service.secure(null, null, null, null);
+        });
+        assertEquals("Must provide a keystore file to run secured", thrown.getMessage());
+
     }
 
 
-    
-    @Test(timeout = 300)
+    @Test
     public void stopExtinguishesServer() {
         Service service = Service.ignite();
         Routes routes = Mockito.mock(Routes.class);
@@ -218,16 +225,16 @@ public class ServiceTest {
         service.initialized = true;
         service.stop();
         try {
-        	// yes, this is ugly and forces to set a test timeout as a precaution :(
+            // yes, this is ugly and forces to set a test timeout as a precaution :(
             while (service.initialized) {
-            	Thread.sleep(20);
+                Thread.sleep(20);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         Mockito.verify(server).extinguish();
     }
-    
+
     @Test
     public void awaitStopBlocksUntilExtinguished() {
         Service service = Service.ignite();
@@ -241,6 +248,6 @@ public class ServiceTest {
         Mockito.verify(server).extinguish();
         assertFalse(service.initialized);
     }
-    
+
 
 }

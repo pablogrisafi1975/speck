@@ -32,8 +32,8 @@ public class SocketConnectorFactory {
      */
     /*
     public static ServerConnector createSocketConnector(Server server, String host, int port, boolean trustForwardHeaders) {
-        Assert.notNull(server, "'server' must not be null");
-        Assert.notNull(host, "'host' must not be null");
+        notNull(server, "'server' must not be null");
+        notNull(host, "'host' must not be null");
 
         HttpConnectionFactory httpConnectionFactory = createHttpConnectionFactory(trustForwardHeaders);
         ServerConnector connector = new ServerConnector(server, httpConnectionFactory);
@@ -56,9 +56,9 @@ public class SocketConnectorFactory {
                                                               int port,
                                                               SslStores sslStores,
                                                               boolean trustForwardHeaders) {
-        Assert.notNull(server, "'server' must not be null");
-        Assert.notNull(host, "'host' must not be null");
-        Assert.notNull(sslStores, "'sslStores' must not be null");
+        notNull(server, "'server' must not be null");
+        notNull(host, "'host' must not be null");
+        notNull(sslStores, "'sslStores' must not be null");
 
         SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
         sslContextFactory.setKeyStorePath(sslStores.keystoreFile());

@@ -20,10 +20,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import speck.Speck;
 import speck.examples.exception.NotFoundException;
@@ -47,7 +47,7 @@ public class DisableMimeGuessingTest {
 
     private static File tmpExternalFile;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
         if (tmpExternalFile != null) {
@@ -56,7 +56,7 @@ public class DisableMimeGuessingTest {
         }
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws IOException {
         testUtil = new SpeckTestUtil(4567);
 
@@ -82,20 +82,20 @@ public class DisableMimeGuessingTest {
 
     @Test
     public void testMimeTypes() throws Exception {
-        Assert.assertNull(doGet("/pages/index.html").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/js/scripts.js").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/css/style.css").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/img/specklogo.png").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/img/specklogo.svg").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/img/specklogoPng").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/img/specklogoSvg").headers.firstValue("Content-Type").orElse(null));
-        Assert.assertNull(doGet("/externalFile.html").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/pages/index.html").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/js/scripts.js").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/css/style.css").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/img/specklogo.png").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/img/specklogo.svg").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/img/specklogoPng").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/img/specklogoSvg").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/externalFile.html").headers.firstValue("Content-Type").orElse(null));
     }
 
     @Test
     public void testCustomMimeType() throws Exception {
         staticFiles.registerMimeType("cxt", "custom-extension-type");
-        Assert.assertNull(doGet("/img/file.cxt").headers.firstValue("Content-Type").orElse(null));
+        assertNull(doGet("/img/file.cxt").headers.firstValue("Content-Type").orElse(null));
     }
 
     private SpeckTestUtil.UrlResponse doGet(String fileName) throws Exception {

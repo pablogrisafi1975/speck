@@ -20,12 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 
 
 import com.sun.net.httpserver.HttpExchange;
@@ -140,7 +135,7 @@ public class StaticFilesConfiguration {
      * @param folder the location
      */
     public synchronized void configure(String folder) {
-        Assert.notNull(folder, "'folder' must not be null");
+        Objects.requireNonNull(folder, "'folder' must not be null");
 
         if (!staticResourcesSet) {
 
@@ -160,7 +155,7 @@ public class StaticFilesConfiguration {
      * @param folder the location
      */
     public synchronized void configureExternal(String folder) {
-        Assert.notNull(folder, "'folder' must not be null");
+        Objects.requireNonNull(folder, "'folder' must not be null");
 
         if (!externalStaticResourcesSet) {
             try {

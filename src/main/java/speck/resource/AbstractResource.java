@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 
 import speck.utils.Assert;
 import speck.utils.ResourceUtils;
@@ -120,7 +121,7 @@ public abstract class AbstractResource implements Resource {
     @Override
     public long contentLength() throws IOException {
         try (InputStream is = this.getInputStream()) {
-            Assert.state(is != null, "resource input stream must not be null");
+            Objects.requireNonNull(is , "resource input stream must not be null");
             long size = 0;
             byte[] buf = new byte[255];
             int read;

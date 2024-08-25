@@ -1,9 +1,10 @@
 package speck;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+
 
 public class Base64Test {
 
@@ -13,7 +14,7 @@ public class Base64Test {
     public final void test_encode() {
         String in = "hello";
         String encode = Base64.encode(in);
-        Assert.assertFalse(in.equals(encode));
+        assertFalse(in.equals(encode));
     }
 
     //CS304 manually Issue link:https://github.com/perwendel/speck/issues/1061
@@ -24,7 +25,7 @@ public class Base64Test {
         String encode = Base64.encode(in);
         String decode = Base64.decode(encode);
 
-        Assert.assertTrue(in.equals(decode));
+        assertTrue(in.equals(decode));
     }
 
 }

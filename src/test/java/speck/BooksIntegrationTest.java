@@ -1,9 +1,10 @@
 package speck;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import speck.examples.books.Books;
 import speck.utils.IOUtils;
 
@@ -20,9 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static speck.Speck.after;
 import static speck.Speck.before;
 
@@ -36,17 +36,17 @@ public class BooksIntegrationTest {
 
     private String bookId;
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         Speck.stop();
     }
 
-    @After
+    @AfterEach
     public void clearBooks() {
         Books.books.clear();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         before((request, response) -> response.header("FOZ", "BAZ"));
 
@@ -140,9 +140,11 @@ public class BooksIntegrationTest {
         assertTrue(result.contains("deleted"));
     }
 
-    @Test(expected = FileNotFoundException.class)
+    @Test
     public void wontFindBook() throws IOException, URISyntaxException {
-        getResponse("GET", "/books/" + bookId, null);
+        assertThrows(FileNotFoundException.class, () ->
+            getResponse("GET", "/books/" + bookId, null)
+        );
     }
 
     private static UrlResponse doMethod(String requestMethod, String path, String body) {

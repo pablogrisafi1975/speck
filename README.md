@@ -20,7 +20,7 @@ and got this thing (kind of) working.
 * Logging: It kind of works using System.Logger, but I want to be sure you can add a dependency to Slf4J and use it as expected
 * Upload/download files: Didn't get to test it yet
 * Attributes: Not working yet
-* Many more tests
+* Many more tests, enable/uncomment all tests.
 * Actual performance and load testing using JMeter
 * GitHub actions to build and upload to maven central
 * and many more things...

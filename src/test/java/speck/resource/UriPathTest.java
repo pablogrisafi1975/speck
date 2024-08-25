@@ -1,8 +1,9 @@
 package speck.resource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class UriPathTest {
     @Test
@@ -57,7 +58,7 @@ public class UriPathTest {
         };
 
         for (String[] aCanonical : canonical) {
-            assertEquals("canonical " + aCanonical[0], aCanonical[1], UriPath.canonical(aCanonical[0]));
+            assertEquals( aCanonical[1], UriPath.canonical(aCanonical[0]), "canonical " + aCanonical[0]);
         }
     }
 
