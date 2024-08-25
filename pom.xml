@@ -250,7 +250,6 @@
 </project>
 
 <!--
-mvn deploy -Prelease
-crea el central-bundle.zip pero falla al subirlo
-Se puede subir manualmente con cualquier nombre y publicarlo
+ mvn  deploy -DskipTests=true -Prelease
+ pude deployar el 2024-08-17 al cambiar el user token de maven...
 -->
